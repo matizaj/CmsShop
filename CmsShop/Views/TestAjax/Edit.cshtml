@@ -1,0 +1,92 @@
+﻿@model CmsShop.Areas.Admin.Data.Page
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Body)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sorting)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HasSiteBar)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem =>Model.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Body)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Sorting)
+                </td>
+<td>
+                @Html.DisplayFor(modelItem => Model.HasSiteBar)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+<button class="btn btn-default" id="btn">Klik</button>
+<div id="result">
+
+</div>
+@section Scripts{ 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+    <script>
+        $(function () {
+            $("#btn").click(function () { 
+            $.ajax({
+                type: 'GET',
+                url: 'https://localhost:44359/testajax/index',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    $('#result').html(response);
+                },
+                error: function () {
+                    console.log('Error in Operation');
+                }  
+
+                });
+            });
+         });
+    </script>
+}

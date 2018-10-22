@@ -1,0 +1,56 @@
+﻿@model CmsShop.Models.ViewModels.PageViewModel
+
+@{
+    ViewData["Title"] = "AddPage";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Dodawanie strony</h2>
+@if (TempData["SM"] != null)
+{
+<div class="alert alert-success">
+    @TempData["SM"]
+</div>
+
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddPage" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="Title" class="control-label">Tytuł</label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slug" class="control-label">Adres</label>
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Body" class="control-label">Treść strony</label>
+                <input asp-for="Body" class="form-control"/>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox">
+                    <label>
+                        <input asp-for="HasSiteBar" type="checkbox" /> Pasek boczny
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Dodaj stronę" class="btn btn-primary" asp-action="AddPage"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Powrót</a>
+</div>
+

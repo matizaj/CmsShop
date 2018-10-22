@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<body>
+
+
+    <button class="btn btn-default" id="btn">Klik</button>
+</body>
+@section Scripts{ 
+    <script>
+        $(document).ready(function () {
+            var btn = document.getElementById("#btn");
+            btn.click(function () {
+                $.ajax({
+                    //base address/controller/Action
+                    url: 'http://localhost:44359/TestAjax/Index',
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (data, textStatus, xhr) {
+                        console.log(data);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log('Error in Operation');
+                    }  
+                });
+                return false;
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,44 @@
+﻿@model CmsShop.Models.ViewModels.SidebarViewModel
+
+@{
+    ViewData["Title"] = "Edycja pasek boczny";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edycja paska bocznego</h2>
+@if (TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SM"]
+    </div>
+
+}
+<h4>Edycja</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditSidebar" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@Model.Id" />
+            <div class="form-group">
+                <label asp-for="Body" class="control-label">Treść</label>
+                @*<textarea  asp-for="Body" class="form-control" />*@
+            @Html.TextAreaFor(model=>model.Body, new { @class="form-control"})
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div><br /><br />
+            <div class="form-group">
+                <input type="submit" value="Edytuj" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+@section Scripts{
+    <script src="https://cdn.ckeditor.com/4.10.1/standard/ckeditor.js"></script>
+    <script>
+        CKEDITOR.replace("Body");
+    </script>
+}
