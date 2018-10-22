@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CmsShop.Models.ViewModels.CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Kategorie";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Kategorie</h2>
+
+<div class="new-cat">
+    <input type="text" id="newCatName" />
+    <p>
+        <a href="#" id="newCata">Dodaj Nową kategorię</a>
+        <span class="ajax-text">
+            <img src="~/images/7SMT.gif" />
+        </span>
+    </p>
+</div>
+@if (!Model.Any())
+{
+    <p>Nie ma jeszcze żadnych kategorii</p>
+
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Slug)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sorting)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Slug)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sorting)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}

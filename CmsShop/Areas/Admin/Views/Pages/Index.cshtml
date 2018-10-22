@@ -87,18 +87,18 @@ else
                 update: (function () {
                     var id = $('table#pages tbody').sortable("serialize");
                     var url = "/admin/pages/ReorderPages";
-                    $.ajax({
-                        type: 'POST', 
-                        url: "/admin/pages/ReorderPages",
-                        contentType: "application/json; charset=utf-8",
-                        success: function (data) {
+                    //$.ajax({
+                    //    type: 'POST', 
+                    //    url: "/admin/pages/ReorderPages",
+                    //    contentType: "application/json; charset=utf-8",
+                    //    success: function (data) {
                             
-                        },
-                        error: function () {
-                            alert("error");
+                    //    },
+                    //    error: function () {
+                    //        alert("error");
 
-                        }
-                    });
+                    //    }
+                    //});
                     $.post(url, id, function (data) {
                         url: "/admin/pages/ReorderPages";
                         contentType: "application/json; charset=utf-8";
