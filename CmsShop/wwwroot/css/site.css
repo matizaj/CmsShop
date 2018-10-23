@@ -43,3 +43,11 @@ table.sorting tr:not(.home){
 .ui-state-highlight{
     border: 1px dashed #ccc;
 }
+
+span.ajax-text{
+    display: none;
+}
+div.cat-new{
+    margin-top: 30px;
+    position:relative;
+}

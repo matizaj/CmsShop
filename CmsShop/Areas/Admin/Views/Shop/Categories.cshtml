@@ -4,7 +4,17 @@
     ViewData["Title"] = "Kategorie";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<style>
+    span.ajax-text {
+        display: none;
+    }
 
+    div.cat-new {
+        margin-top: 30px;
+        position: relative;
+    }
+
+</style>
 <h2>Kategorie</h2>
 
 <div class="new-cat">
@@ -23,47 +33,89 @@
 }
 else
 {
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Slug)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sorting)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model)
-{
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Slug)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sorting)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+    <table class="table sorting" id="pages">
+        <thead>
+            <tr class="home">
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.EditorFor(modelItem => item.Name, new{ htmlAttributes =new { @class = "form-control", @readonly = "readonly" } })
+                    </td>
+                    <td>
+                        @Html.ActionLink("Usuń", "DeleteCategory", new { id=item.Id}, new { @class = "Delete" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+@section Scripts{
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+
+    <script>
+        $(function () {
+            //add category
+            var newCatA = $("a#newCata");
+            var newCatTextInput = $('#newCatName');
+            var ajaxText = $('span.ajax-text');
+            var table = $('table#pages tbody');
+
+            newCatTextInput.keyup(function (e) {
+                if (e.keyCode == 13) {
+                    newCatA.click(); 
+                }
+            });
+            newCatA.click(function (e) {
+                e.preventDefault();
+                var catName = newCatTextInput.val();
+                if (catName.length < 2) {
+                    alert("Nazwa kategorii musie mieć co najmniej 2 znaki");
+                    return false;
+                }
+                var url = "/Admin/Shop/AddNewCategory";
+                ajaxText.show();
+                $.post(url, { catName: catName }, function (data) {
+                    var response = data.trim();
+                    if (response == 'tytulzajety') {
+                        ajaxText.html("<span class='alert alert-danger'>Tytuł już istnieje</span>");
+                        setTimeout(function () {
+                            ajaxText.fadeOut("fast", function () {
+                                ajaxText.html("<img src=/images/7SMT.gif/>");
+                            });
+                        }, 2000);
+                        return false;
+                    } else {
+                        if (!$("table#pages").length) {
+                            location.reload();
+                        } else {
+                            ajaxText.html("<span class='alert alert-success'>Kategoria została dodana</span>");
+                            setTimeout(function () {
+                                ajaxText.fadeOut("fast", function () {
+                                    ajaxText.html("<img src=/images/7SMT.gif/>");
+                                });
+                            }, 2000);
+                            newCatTextInput.val("");
+                            var toAppend = $("table#pages tbody tr:last").clone();
+                            toAppend.attr("id", "id_" + data);
+                            toAppend.find("#item_Name").val(catName);
+                            toAppend.find("a.delete").attr("href", "/admin/shop/DeleteCategory" + data);
+                            table.append(toAppend);
+                            table.sortable("refresh");
+                        }
+
+                    }
+
+                });
+
+            });
+         });
+    </script>
+
 }
