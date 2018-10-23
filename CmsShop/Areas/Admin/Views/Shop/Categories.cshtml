@@ -145,13 +145,7 @@ else
                                 //});
                             },
 
-                    });
-
-                        //delete category
-                        $('body').click('click', 'a.delete', function () {
-                            if (!confirm("Potwierdzasz usunięcie kategorii"));
-
-                    });
+                    });                       
 
                         //change cat name
                         var orginalTextboxValue;
@@ -198,7 +192,13 @@ else
                                 $this.attr("readonly", true);
 
                             });
-                        });
+                    });
+
+                         //delete category
+                        $('body').click('click', 'a.delete', function () {
+                            if (!confirm("Potwierdzasz usunięcie kategorii"));
+
+                    });
     </script>
 
 }

@@ -80,7 +80,7 @@ namespace CmsShop.Areas.Admin.Controllers
             var catDto = _context.Categories.Find(id);
             catDto.Name = newCatName;
             catDto.Slug = newCatName.Replace(" ", "-");
-            _context.Categories.Add(catDto);
+            //_context.Categories.Add(catDto);
             _context.SaveChanges();
             return "Ok";
         }
