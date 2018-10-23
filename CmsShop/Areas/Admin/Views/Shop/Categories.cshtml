@@ -44,7 +44,7 @@ else
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr id="id_@item.Id">
                     <td>
                         @Html.EditorFor(modelItem => item.Name, new{ htmlAttributes =new { @class = "form-control", @readonly = "readonly" } })
                     </td>
@@ -115,7 +115,39 @@ else
                 });
 
             });
-         });
+        });
+
+        //sorting
+                        $('table#pages tbody').sortable({
+                            items: "tr:not(.home)",
+                            placeholder: "ui-state-highlight",
+                            update: function () {
+                                var ids = $('table#pages tbody').sortable("serialize");
+                                var url = "/Admin/Shop/ReorderCat";
+                                console.log(ids.toString());
+                                $.post(url, ids, function (data) { });
+                                //var jsonData = $('table#pages tbody').serialize();
+                                //$.ajax({
+                                //    type: 'POST',
+                                //    url: url,
+                                //    data: '{"id" : '+ids+'"}"',
+                                //    contentType: "application/json",
+                                //    success: function (data) { },
+                                //    error: function (data) {
+                                //        alert(data.status + " taki blad");
+
+                                //    }
+
+                                //});
+                            },
+
+                    });
+
+                        //delete category
+                        $('body').click('click', 'a.delete', function () {
+                            if (!confirm("Potwierdzasz usunięcie kategorii"));
+
+                        });
     </script>
 
 }

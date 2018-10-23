@@ -44,5 +44,30 @@ namespace CmsShop.Areas.Admin.Controllers
             return id;
 
         }
+
+        [HttpPost]
+        public IActionResult ReorderCat(int[] id)
+        {
+            
+            int count = 1;
+            CategoryDTO catDto;
+            foreach (var catId in id)
+            {
+                catDto = _context.Categories.Find(catId);
+                catDto.Sorting = count;
+                _context.SaveChanges();
+                count++;
+            }
+            return RedirectToAction(nameof(Categories));
+        }
+
+        //[HttpPost]
+        public IActionResult DeleteCategory(int id)
+        {
+            var cattoDel=_context.Categories.Find(id);
+            _context.Categories.Remove(cattoDel);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Categories));
+        }
     }
 }
