@@ -69,5 +69,20 @@ namespace CmsShop.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction(nameof(Categories));
         }
+
+        [HttpPost]
+        public string RenameCategory(string newCatName, int id)
+        {
+            if (_context.Categories.Any(x => x.Name == newCatName))
+            {
+                return "tytulzajety";
+            }
+            var catDto = _context.Categories.Find(id);
+            catDto.Name = newCatName;
+            catDto.Slug = newCatName.Replace(" ", "-");
+            _context.Categories.Add(catDto);
+            _context.SaveChanges();
+            return "Ok";
+        }
     }
 }
