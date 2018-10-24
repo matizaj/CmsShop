@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using CmsShop.App_Data;
 using CmsShop.Models.Data;
 using CmsShop.Models.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CmsShop.Areas.Admin.Controllers
 {
@@ -83,6 +85,33 @@ namespace CmsShop.Areas.Admin.Controllers
             //_context.Categories.Add(catDto);
             _context.SaveChanges();
             return "Ok";
+        }
+
+        [HttpGet]
+        public IActionResult AddProduct()
+        {
+            ProductViewModel product = new ProductViewModel();
+            product.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
+            return View(product);
+        }
+
+        [HttpPost]
+        public IActionResult AddProduct([FromForm] ProductViewModel product, IFormFile file)
+        {
+            if (!ModelState.IsValid)
+            {
+                product.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
+                return View(product);
+            }
+
+            if (_context.Products.Any(x => x.Name == product.Name))
+            {
+                product.Categories = new SelectList(_context.Categories.ToList(), "Id", "Name");
+                ModelState.AddModelError("", "Ta nazwa produktu jest zajęta");
+                return View(product);
+            }
+            var id = _context.Products.Find(product.id);
+            return View(product);
         }
     }
 }

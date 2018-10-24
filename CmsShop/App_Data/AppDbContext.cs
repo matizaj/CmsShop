@@ -14,5 +14,6 @@ namespace CmsShop.App_Data
         public DbSet<Page> Pages { get; set; }
         public DbSet<SidebarDTO> Sidebars { get; set; }
         public DbSet<CategoryDTO> Categories { get; set; }
+        public DbSet<ProductDTO> Products { get; set; }
     }
 }
