@@ -6,12 +6,18 @@
 }
 
 <h2>Dodaj produkt</h2>
+@if(TempData["SM"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SM"]
+    </div>
 
+}
 <h4>ProductViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddProduct" method="post">
+        <form asp-action="AddProduct" method="post"  enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label">Nazwa</label>
